@@ -1,0 +1,32 @@
+.carousel {
+  display: flex;
+  align-items: center;
+  background-color: $off-white;
+}
+
+#carousel-track {
+  display: flex;
+  flex-direction: column;
+  gap: 4vmin;
+  transform: translate(-25px, 0%);
+  position: absolute;
+  top: 4vmin;
+  animation: carousel-start 4s ease backwards;
+  animation-delay: 2s;
+}
+
+@keyframes carousel-start {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#carousel-track > .carousel-image {
+  width: calc(50vw - 5vw);
+  height: 38vmin;
+  object-fit: cover;
+  object-position: center;
+}

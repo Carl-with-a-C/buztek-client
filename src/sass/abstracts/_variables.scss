@@ -1,0 +1,42 @@
+// Breakpoints
+$layout-breakpoint-xlarge: 1289px;
+$layout-breakpoint-large: 989px;
+$layout-breakpoint-medium: 739px;
+$layout-breakpoint-small: 479px;
+$layout-breakpoint-xsmall: 369px;
+$layout-breakpoint-xxsmall: 281px;
+
+// Colors
+$background: #1e1e1e;
+$black: #000;
+$white: #fff;
+$off-white: #f8f2e4;
+$light-green: #eff4cd;
+$hero-beige: #ffefc7;
+$dark-grey: #292929;
+$dark-brown: #464838;
+$aqua: #00c9a7;
+$yellow: #edda33;
+$bright-yellow: #d5ff40;
+
+//gradients
+$hero-gradient: linear-gradient(
+  45deg,
+  #464838,
+  #5f623c,
+  #7b7e3e,
+  #99993e,
+  #bbb53b,
+  #bbc240,
+  #bacf46,
+  #b7dc4e,
+  #90da66,
+  #6ad67e,
+  #41d094,
+  #00c9a7
+);
+
+$initial-gradient: linear-gradient(
+  45deg,
+  rgba(248, 242, 228, 0) rgba(248, 242, 228, 0)
+);

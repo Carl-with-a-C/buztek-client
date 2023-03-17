@@ -1,0 +1,104 @@
+.app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: $black;
+  align-items: stretch;
+  color: $black;
+  overflow: hidden;
+}
+
+#logo {
+  position: absolute;
+  width: 4rem;
+  top: 4rem;
+  left: 4rem;
+  z-index: 5;
+  animation: logo-animation 700ms ease-in backwards;
+  animation-delay: 3s;
+}
+
+@keyframes logo-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.nav-toggle {
+  height: 20rem;
+  width: 20rem;
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  bottom: 10rem;
+  transform: translateX(-50%);
+  background-color: $aqua;
+  border: none;
+  border-radius: 10rem;
+  outline: none;
+  box-shadow: 0rem 4rem 10rem rgba(20 20 20 /35%);
+  cursor: pointer;
+  transition: transform, background-color;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+  animation: button-start 700ms ease backwards;
+  animation-delay: 2.5s;
+}
+
+@keyframes button-start {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 8rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+.nav-toggle:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.nav-toggle:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+.nav-toggle:focus {
+  outline: none;
+}
+
+#nav-open {
+  background-color: $yellow;
+}
+
+text {
+  font-size: var(--fs-p);
+}
+
+#button-menu-icon {
+  width: 10rem;
+  opacity: 0.05;
+  transition: all ease-in 400ms;
+}
+
+#button-menu-icon:hover {
+  opacity: 0.25;
+  transform: scale(1.1);
+  transition: all ease-in 150ms;
+}
+
+#button-menu-icon-open {
+  width: 8rem;
+  opacity: 0.05;
+  transition: all ease-in 400ms;
+}
+
+#button-menu-icon-open:hover {
+  opacity: 0.75;
+  transform: scale(1.1);
+  transition: all ease-in 150ms;
+}
