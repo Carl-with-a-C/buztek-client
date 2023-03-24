@@ -1,11 +1,14 @@
 import "./sass/main.scss";
-import { useState, useEffect } from "React";
+import { useState, useEffect } from "react";
+import gsap from "gsap";
+
 import Menu from "./assets/dot-menu.svg";
 import Cross from "./assets/cross.svg";
 import Logo from "./assets/OutlineBTek.svg";
-import Wordmark from "./assets/BTwordmark.svg";
+import Wordmark from "./assets/BTWMdark.svg";
+import LongArrow from "./assets/Arrow---Right.svg";
 
-import HomeImage from "./assets/home-screen.png";
+import HomeImage from "./assets/home-screen.jpg";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -16,19 +19,19 @@ function App() {
   const [percentage, setPercentage] = useState(0);
   const [prevPercentage, setPrevPercentage] = useState(0);
   const [nextPercentage, setNextPercentage] = useState(0);
+  const [titleHovered, setTitleHovered] = useState("");
+
+  const [revealSite, setRevealSite] = useState(false);
+  const [buildClicked, setBuildClicked] = useState(false);
 
   const maxDelta = window.innerHeight / 2;
 
   const toggleNav = () => {
     setNavOpen(!navOpen);
+    setBuildClicked(false);
   };
 
-  // useEffect(() => {
-  //   loading
-  //     ? document.querySelector("body").classList.add("loading")
-  //     : document.querySelector("body").classList.remove("loading");
-  // }, [loading]);
-
+  //mousemovement tracker and animator
   useEffect(() => {
     const track = document.getElementById("carousel-track");
     const handleMouseDown = (e) => {
@@ -81,39 +84,253 @@ function App() {
     };
   }, [percentage, nextPercentage, mouseDelta, mouseDown]);
 
+  //load animations
+  useEffect(() => {
+    const tl = gsap.timeline();
+    let smx = gsap.context(() => {
+      //onClick reveal
+      if (revealSite === true) {
+        tl.to(".pre-loader", {
+          opacity: 0,
+          display: "none",
+          ease: "power2.inOut",
+        });
+        tl.to(
+          ".header-row",
+          1,
+          {
+            top: "0",
+            ease: "power3.inOut",
+            stagger: {
+              amount: 0.15,
+            },
+          },
+          "-=1.1"
+        );
+
+        tl.from(
+          ".footer, .topline-items > li",
+          0.7,
+          {
+            y: 20,
+            opacity: 0,
+
+            stagger: {
+              amount: -0.3,
+            },
+          },
+          "+=0.3"
+        );
+
+        tl.fromTo(
+          ".nav-toggle",
+          {
+            backgroundColor: "#f8f2e4",
+          },
+          { backgroundColor: "#00c9a7", ease: "power3.out" },
+          "+=0.5"
+        );
+        tl.to(
+          ".header-row-wrapper",
+          0,
+          {
+            display: "none",
+          },
+          "-=1.2"
+        );
+        tl.to(
+          ".smlTitle",
+          {
+            opacity: 0,
+          },
+          "-=0.8"
+        );
+
+        tl.to(
+          ".header-row-one",
+          0.5,
+          {
+            top: "-60px",
+            left: "-12%",
+            fontSize: "1.6em",
+            ease: "power4.inOut",
+          },
+          "-=0.92"
+        )
+          .to(
+            ".header-row-two",
+            0.3,
+            {
+              top: "-60px",
+              left: "-27vw",
+              fontSize: "1.31em",
+              ease: "power4.in",
+            },
+            "-=0.75"
+          )
+          .to(
+            ".ampisand",
+            1.5,
+            {
+              opacity: 1,
+              ease: "power1.out",
+            },
+            "+=0.5"
+          );
+      }
+
+      //preloader auto animation
+      tl.to(".header > h1", 2, {
+        top: 0,
+        ease: "power3.inOut",
+        stagger: {
+          amount: 0.2,
+        },
+      }).to(".pre-loader-btn", 0.8, {
+        opacity: 1,
+        delay: 1.7,
+      });
+
+      //hover listener and function to set word hovered
+      const titleWordOne = document.getElementById("titleWordOne");
+      const titleWordTwo = document.getElementById("titleWordTwo");
+      const handleTitleHover = (e) => {
+        setTitleHovered(e.target.classList[1]);
+      };
+
+      const handleTitleUnhover = () => {
+        setTitleHovered("");
+      };
+      titleWordOne.addEventListener("mouseenter", handleTitleHover);
+      titleWordTwo.addEventListener("mouseenter", handleTitleHover);
+      titleWordOne.addEventListener("mouseleave", handleTitleUnhover);
+      titleWordTwo.addEventListener("mouseleave", handleTitleUnhover);
+
+      return () => {
+        titleWordOne.removeEventListener("mouseenter", handleTitleHover);
+        titleWordTwo.removeEventListener("mouseenter", handleTitleHover);
+        smx.revert();
+        titleWordOne.removeEventListener("mouseleave", handleTitleUnhover);
+        titleWordTwo.removeEventListener("mouseleave", handleTitleUnhover);
+      };
+    });
+  }, [revealSite]);
+
+  //scroll-effect example
+  // useEffect(() => {
+  //   let scrollmx = gsap.context(() => {
+  //     gsap.registerPlugin(ScrollTrigger);
+  //     ScrollTrigger.create({
+  //       animation: gsap.from(".header-row-one", {
+  //         y: "50px",
+  //         scale: 2,
+  //         yPercent: -50,
+  //       }),
+  //       scrub: true,
+  //       trigger: ".footer",
+  //       start: "top bottom",
+  //       endTrigger: ".footer",
+  //       end: "top-center",
+  //     });
+  //     return () => {
+  //       scrollmx.revert();
+  //     };
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    let tmx = gsap.context(() => {
+      if (buildClicked === true) {
+        tl.to(".nav-expander", 2, {
+          scale: 20,
+          ease: "power3.inOut",
+        }).to(
+          ".nav-expander",
+          2,
+          {
+            opacity: 0,
+            display: "none",
+            ease: "power3.inOut",
+          },
+          "+=0.2"
+        );
+      }
+      return () => {
+        tmx.revert();
+      };
+    });
+  }, [buildClicked]);
+
+  const handleTitleClick = () => {
+    useEffect(() => {
+      setBuildClicked(!buildClicked);
+    }, [buildClicked]);
+  };
+
+  console.log(titleHovered, "title-hovered", buildClicked, "build-clicked");
+
   return (
     <div>
       <div className="app">
-        <a className="logo-container">
-          <img id="logo" src={Logo} alt="Buztek logo" />
-        </a>
-        <main id={navOpen ? "landing-open" : null} className="landing">
-          <section className="hero-splash">
-            <h1 className="hero-title">
-              <div id="hero-title-container">
-                <div className="title-line" id="hero-title--line-1">
-                  WE <strong id="build">BUILD</strong>
-                </div>
-                <div className="title-line" id="hero-title--line-2">
-                  AND <strong id="secure">SECURE</strong>
-                </div>
-                <div className="title-line" id="hero-title--line-3">
-                  YOUR TECH
-                </div>
+        <main
+          id={navOpen ? "landing-open" : null}
+          className={titleHovered ? "landing landing-title-hovered" : "landing"}
+        >
+          <div className="topline">
+            <ul className="topline-items">
+              <li>LOCATION 53.4808° N, 2.2426° W</li>
+              <li>EST 2023</li>
+              <li>
+                <a className="logo-container">
+                  <img
+                    id="logo"
+                    className="logo"
+                    src={Logo}
+                    alt="Buztek logo"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="site-header">
+            <a href="#" className="row">
+              <div
+                className="header-row header-row-one"
+                id="titleWordOne"
+                data-text="BUILD"
+                onClick={handleTitleClick}
+              >
+                <span className="smlTitle">we</span>
+                BUILD
+                <span className="ampisand">&</span>
               </div>
-            </h1>
-            <div id="hero-blurb-container">
-              <p className="hero-blurb">
-                our expertise lies in translating your core needs, values and
-                strategy into inspiring technical solutions
-              </p>
-            </div>
-          </section>
+              <div className="header-row-wrapper"></div>
+            </a>
+            <a className="row">
+              <div
+                className="header-row header-row-two"
+                id="titleWordTwo"
+                onClick={() => {
+                  setBuildClicked(!buildClicked);
+                }}
+              >
+                <span className="smlTitle">and</span>
+                SECURE
+              </div>
+              <div className="header-row-wrapper"></div>
+            </a>
+          </div>
+          <div className="footer">
+            <div className="blurb">Your digital technology.</div>
+          </div>
+
           <section className="carousel">
-            <div className="wordmark-container">
-              <img id="wordmark" src={Wordmark} />
-            </div>
-            <div id="carousel-track">
+            <div
+              id="carousel-track"
+              className={mouseDelta === 0 ? "carousel-track" : null}
+            >
               <img
                 className="carousel-image"
                 id="c-image-a"
@@ -201,6 +418,50 @@ function App() {
           src={navOpen ? Cross : Menu}
         ></img>
       </button>
+
+      <span className="nav-expander"></span>
+
+      <main className="pre-loader">
+        <div className="pre-loader-container">
+          {/* <img src={Wordmark} alt="Buztek Wordmark" /> */}
+          <div className="header concat">
+            <h1 data-text="Our expertise lies in">Our expertise lies in</h1>
+            <div className="header-wrapper"></div>
+          </div>
+          <div className="header">
+            <h1>translating your core </h1>
+            <div className="header-wrapper"></div>
+          </div>
+          <div className="header">
+            <h1> needs, values and strategy</h1>
+            <div className="header-wrapper"></div>
+          </div>
+          <div className="header">
+            <h1> into inspiring</h1>
+            <div className="header-wrapper"></div>
+          </div>
+          <div className="header">
+            <h1 id="tech-solutions" data-text="technical solutions">
+              technical solutions
+            </h1>
+            <div className="header-wrapper"></div>
+          </div>
+
+          <div
+            className="pre-loader-btn"
+            onClick={() => setRevealSite(!revealSite)}
+          >
+            <div className="btn">
+              Click anywhere
+              <img src={LongArrow} alt="right arrow" />
+              to start a{" "}
+              <span id="buzz" data-text="Buzz">
+                Buzz
+              </span>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

@@ -1,0 +1,100 @@
+.pre-loader {
+  position: fixed;
+  background-color: $dark-grey;
+  color: $light-green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  font-weight: 700;
+  top: 0;
+  left: 0;
+}
+
+.pre-loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+// .pre-loader-container > img {
+//   width: 32em;
+//   position: fixed;
+//   top: 0;
+//   padding: 2em;
+// }
+
+.pre-loader-container .header {
+  position: relative;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.header {
+  white-space: nowrap;
+}
+
+.header h1 {
+  font-family: "Climate Crisis", cursive;
+  position: relative;
+  top: 125px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 12em;
+  line-height: 90%;
+  color: $dark-grey;
+  -webkit-text-stroke: 1px $light-green;
+}
+
+.header h1::before {
+  content: attr(data-text);
+  position: absolute;
+  color: $light-green;
+  overflow: hidden;
+  width: 0%;
+  transition: 1.5s;
+  animation: fill 2s cubic-bezier(0.78, 0.01, 0.21, 1) forwards;
+  animation-delay: 2s;
+}
+
+@keyframes fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.header-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 120px;
+  left: -20px;
+  width: 110%;
+  height: 120px;
+  background: $dark-grey;
+  margin: 0 auto;
+}
+
+.pre-loader-btn {
+  position: relative;
+  margin: 3em 0 1em 0;
+  font-size: 5rem;
+  cursor: pointer;
+  z-index: 2;
+  font-family: "Erode";
+  font-weight: 600;
+  opacity: 0;
+}
+
+.pre-loader-btn img {
+  position: relative;
+  width: 80px;
+  top: 0;
+  padding: 0 0.4em;
+}
