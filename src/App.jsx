@@ -4,12 +4,10 @@ import gsap from "gsap";
 
 import Landing from "./components/Landing";
 import Services from "./components/Services";
+import Nav from "./components/Nav";
+import NavButton from "./components/NavButton";
 
-import Menu from "./assets/dot-menu.svg";
-import Cross from "./assets/cross.svg";
 import LongArrow from "./assets/Arrow---Right.svg";
-
-import HomeImage from "./assets/home-screen.jpg";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -370,49 +368,9 @@ function App() {
         />
         <Services navOpen={navOpen} />
       </div>
-      {/*NAV----------------------------------------------*/}
-      <nav id="nav">
-        <div className="nav-links" id={navOpen ? "nav-links-open" : null}>
-          <a className="nav-link" href="/">
-            <h2 className="nav-link--label">HOME</h2>
-            <img className="nav-link--image" src={HomeImage} />
-          </a>
-          <a className="nav-link" href="#">
-            <h2 className="nav-link--label">WORK</h2>
-            <img
-              className="nav-link--image"
-              src="https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg"
-            />
-          </a>
-          <a className="nav-link" href="#">
-            <h2 className="nav-link--label">ABOUT</h2>
-            <img
-              className="nav-link--image"
-              src="https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg"
-            />
-          </a>
-          <a className="nav-link" href="#">
-            <h2 className="nav-link--label">CONTACT</h2>
-            <img
-              className="nav-link--image"
-              src="https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg"
-            />
-          </a>
-        </div>
-      </nav>
-      {/*NAV-BUTTON---------------------------------------*/}
-      <button
-        id={navOpen ? "nav-open" : null}
-        className="nav-toggle"
-        type="button"
-        onClick={toggleNav}
-      >
-        <img
-          id={navOpen ? "button-menu-icon-open" : "button-menu-icon"}
-          src={navOpen ? Cross : Menu}
-        ></img>
-      </button>
-      <span className="nav-expander"></span>
+      <Nav navOpen={navOpen} />
+      <NavButton navOpen={navOpen} setNavOpen={setNavOpen} />
+
       {/*PRELOADER----------------------------------------*/}
       <main className="pre-loader">
         <div className="pre-loader-container">
