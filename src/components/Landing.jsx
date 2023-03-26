@@ -6,6 +6,8 @@ const Landing = ({
   titleHovered,
   setBuildClicked,
   buildClicked,
+  setSecureClicked,
+  secureClicked,
   mouseDelta,
   navOpen,
 }) => {
@@ -59,7 +61,7 @@ const Landing = ({
             className="header-row header-row-two"
             id="titleWordTwo"
             onClick={() => {
-              setBuildClicked(!buildClicked);
+              setSecureClicked(!secureClicked);
             }}
           >
             <span className="smlTitle">and</span>
