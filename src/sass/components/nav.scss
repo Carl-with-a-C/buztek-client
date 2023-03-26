@@ -1,5 +1,5 @@
 #nav {
-  background-color: $black;
+  background-color: $dark-grey;
   height: 55vh;
   width: 100%;
   position: absolute;
@@ -14,13 +14,13 @@
   margin-top: clamp(2rem, 2vw, 3rem);
   padding: 0rem clamp(1rem, 2vw, 2rem);
   transform: translateY(70%) scale(0.85);
-  transition: all 500ms cubic-bezier(0.9, 0.6, 0.5, 0.97);
-  transition-delay: 100ms;
+  transition: all 0.7s cubic-bezier(0.9, 0.6, 0.5, 0.97);
 }
 
 #nav-links-open {
   transform: translateY(0%) scale(1);
   padding: 2rem 8rem;
+  transition-delay: 100ms;
 }
 
 .nav-links > .nav-link {
@@ -29,7 +29,7 @@
 }
 
 .nav-links > .nav-link > .nav-link--label {
-  color: $white;
+  color: $light-green;
   font-size: var(--fs-p);
   font-weight: 600;
   margin: 0;
@@ -41,17 +41,17 @@
   content: "";
   width: 2rem;
   height: 2rem;
-  background-color: $yellow;
+  background-color: $bright-yellow;
   border-radius: 100%;
   position: fixed;
   transform: translate(100%, 30%) scale(0);
-  transition: transform 200ms cubic-bezier(0.79, 0.09, 0.62, 0.79);
+  transition: transform 200ms cubic-bezier(0.78, 0.01, 0.21, 1);
 }
 
 .nav-links > .nav-link > .nav-link--image {
   width: max(22vw, 200px);
   aspect-ratio: 1.8 / 1;
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
   margin-top: 1.25rem;
   object-fit: cover;
   object-position: center;
@@ -61,7 +61,8 @@
 .nav-links > .nav-link:hover {
   .nav-link--image {
     transform: scale(0.98);
-    transition: all 600ms ease;
+    transition: all 400ms ease;
+    border: solid 4px $light-green;
   }
   .nav-link--label {
     transform: translateX(8%);
@@ -71,4 +72,96 @@
 
 .nav-link:hover::before {
   transform: translate(100%, 30%) scale(1);
+}
+
+/*-----NAV BUTTON-----*/
+
+.nav-toggle {
+  height: 20rem;
+  width: 20rem;
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  bottom: 10rem;
+  transform: translateX(-50%);
+  background-color: $aqua;
+  border: none;
+  border-radius: 10rem;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  cursor: pointer;
+  transition: transform, background-color;
+  transition-timing-function: ease;
+  transition-duration: 400ms;
+  animation: button-start 700ms ease backwards;
+  animation-delay: 2.5s;
+}
+
+@keyframes button-start {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 8rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+.nav-expander {
+  content: "";
+  position: fixed;
+  display: block;
+  height: 20rem;
+  width: 20rem;
+  z-index: 2;
+  left: 50%;
+  bottom: 10rem;
+  transform: translateX(-50%);
+  background-color: $aqua;
+  border: none;
+  border-radius: 10rem;
+  outline: none;
+}
+
+.nav-toggle:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.nav-toggle:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+.nav-toggle:focus {
+  outline: none;
+}
+
+#nav-open {
+  background-color: $yellow !important;
+}
+
+#button-menu-icon {
+  width: 10rem;
+  opacity: 0.1;
+  transition: all ease-in 400ms;
+}
+
+#button-menu-icon:hover {
+  opacity: 0.3;
+  transform: scale(1.1);
+  transition: all ease-in 150ms;
+}
+
+#button-menu-icon-open {
+  width: 5rem;
+  opacity: 0.05;
+  transition: all ease-in 150ms;
+}
+
+#button-menu-icon-open:hover {
+  opacity: 0.75;
+  transform: scale(1.1);
+  transition: all ease-in 150ms;
 }
