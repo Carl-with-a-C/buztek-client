@@ -2,10 +2,10 @@ import "./sass/main.scss";
 import { useState, useEffect } from "react";
 import gsap from "gsap";
 
+import Landing from "./components/Landing";
+
 import Menu from "./assets/dot-menu.svg";
 import Cross from "./assets/cross.svg";
-import Logo from "./assets/OutlineBTek.svg";
-import LogoLight from "./assets/BTekLight.svg";
 import LongArrow from "./assets/Arrow---Right.svg";
 
 import HomeImage from "./assets/home-screen.jpg";
@@ -348,19 +348,26 @@ function App() {
     });
   }, [buildClicked]);
 
-  // console.log(
-  //   titleHovered,
-  //   "title-hovered",
-  //   buildClicked,
-  //   "build-clicked",
-  //   landingID(),
-  //   "landing-id"
-  // );
+  console.log(
+    titleHovered,
+    "title-hovered",
+    buildClicked,
+    "build-clicked",
+    landingID(),
+    "landing-id"
+  );
 
   return (
     <div>
       <div className="app">
-        <main id={landingID()} className="landing">
+        <Landing
+          titleHovered={titleHovered}
+          setBuildClicked={setBuildClicked}
+          buildClicked={buildClicked}
+          mouseDelta={mouseDelta}
+          navOpen={navOpen}
+        />
+        {/* <main id={landingID()} className="landing">
           <div className="hover-stopper"></div>
           <div className="topline">
             <ul className="topline-items">
@@ -460,7 +467,7 @@ function App() {
               />
             </div>
           </section>
-        </main>
+        </main> */}
         <div className="services" id={navOpen ? "services-open" : null}>
           <div id="overlay-light"></div>
           <div className="marquee marquee-sml">
