@@ -1,0 +1,143 @@
+#overlay-light {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: $light-green;
+  z-index: 2;
+}
+
+#overlay-dark {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: $dark-grey;
+  z-index: 3;
+}
+
+.content {
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 3em;
+  width: 100%;
+  height: 100vh;
+  padding: 1em 0;
+}
+
+.content > * {
+  position: relative;
+  z-index: 4;
+  mix-blend-mode: difference;
+  color: $dark-brown-negative;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  background-color: $dark-brown-negative;
+}
+
+.title-divider {
+  margin-top: 0.5em;
+}
+
+.title-row {
+  font-family: "Climate Crisis";
+  color: $dark-brown-negative;
+  z-index: 4;
+  margin-top: 0.75em;
+}
+
+.build-row {
+  width: 100%;
+  height: 2.2em;
+  display: flex;
+  padding: 0 6em;
+  align-items: center;
+}
+
+.build-row > .col {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.build-row > .col:first-child {
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.circle > span {
+  width: 1.5em;
+  height: 1.5em;
+  border: none;
+  border-radius: 100%;
+  background-color: $aqua-negative;
+}
+
+.col-title {
+  font-size: 1.3em;
+}
+
+.col-price {
+  font-size: 1.3em;
+  font-family: "Satoshi";
+  font-weight: 800;
+  color: $black;
+
+  z-index: 4;
+}
+
+.pricing {
+  background: $aqua-negative;
+  opacity: 0;
+}
+
+.marquee {
+  position: absolute;
+  width: 100%;
+  padding-top: 4em;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 4;
+  span {
+    font-family: "Climate Crisis";
+    font-weight: 600;
+    color: $dark-brown;
+    letter-spacing: -1%;
+    mix-blend-mode: normal !important;
+    text-transform: uppercase;
+    display: inline-block;
+    padding-left: -10%;
+  }
+}
+
+.marquee-sml {
+  bottom: 35%;
+  z-index: 4;
+
+  span {
+    font-size: 12em;
+    animation: marquee-animate 160s linear infinite;
+  }
+}
+
+.marquee-lrg {
+  bottom: 12%;
+
+  span {
+    font-size: 42em;
+    animation: marquee-animate 240s linear infinite;
+  }
+}
+
+@keyframes marquee-animate {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}

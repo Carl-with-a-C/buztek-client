@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Menu from "./assets/dot-menu.svg";
 import Cross from "./assets/cross.svg";
 import Logo from "./assets/OutlineBTek.svg";
-import Wordmark from "./assets/BTWMdark.svg";
+import LogoLight from "./assets/BTekLight.svg";
 import LongArrow from "./assets/Arrow---Right.svg";
 
 import HomeImage from "./assets/home-screen.jpg";
@@ -29,6 +29,16 @@ function App() {
   const toggleNav = () => {
     setNavOpen(!navOpen);
     setBuildClicked(false);
+  };
+
+  const landingID = () => {
+    if (navOpen) {
+      return "landing-open";
+    }
+    if (titleHovered) {
+      return "landing-title-hovered";
+    }
+    return null;
   };
 
   //mousemovement tracker and animator
@@ -176,7 +186,10 @@ function App() {
               ease: "power1.out",
             },
             "+=0.5"
-          );
+          )
+          .to(".hover-stopper", 0, {
+            display: "none",
+          });
       }
 
       //preloader auto animation
@@ -238,24 +251,96 @@ function App() {
   //   });
   // }, []);
 
+  /*page transition LANDING>SERVICES*/
   useEffect(() => {
     const tl = gsap.timeline();
 
     let tmx = gsap.context(() => {
       if (buildClicked === true) {
         tl.to(".nav-expander", 2, {
-          scale: 20,
+          scale: 25,
           ease: "power3.inOut",
-        }).to(
-          ".nav-expander",
-          2,
+        })
+          .to(
+            ".nav-expander",
+            2,
+            {
+              opacity: 0,
+              display: "none",
+              ease: "power3.inOut",
+            },
+            "+=0.2"
+          )
+          .to(
+            ".landing, .services",
+            0.1,
+            {
+              x: "-100%",
+              opacity: 1,
+            },
+            "-=3"
+          );
+
+        tl.from(
+          ".divider",
+          1.5,
           {
-            opacity: 0,
-            display: "none",
+            scaleX: 0,
             ease: "power3.inOut",
+            stagger: {
+              amount: 1,
+            },
           },
-          "+=0.2"
-        );
+          "-=1.5"
+        )
+          .from(
+            ".build-row > .col:first-child, .title-row, .col-price",
+            1,
+            {
+              opacity: 0,
+              y: 35,
+              ease: "power3.inOut",
+              stagger: {
+                amount: 1.5,
+              },
+            },
+            "-=1.5"
+          )
+          .to("#overlay-dark", 1.2, {
+            top: "-100%",
+            ease: "power3.inOut",
+          })
+          .from(
+            ".marquee",
+            1,
+            {
+              opacity: 0,
+              bottom: "-5%",
+              ease: "power3.inOut",
+            },
+            "-=2"
+          )
+          .from(
+            ".circle",
+            1.1,
+            {
+              scaleY: 0,
+              ease: "power3.inOut",
+              stagger: {
+                amount: 1,
+              },
+            },
+            "-=0.8"
+          )
+          .to(
+            ".pricing",
+            1.2,
+            {
+              opacity: 1,
+              ease: "power3.inOut",
+            },
+            "-=0.8"
+          );
       }
       return () => {
         tmx.revert();
@@ -263,31 +348,30 @@ function App() {
     });
   }, [buildClicked]);
 
-  const handleTitleClick = () => {
-    useEffect(() => {
-      setBuildClicked(!buildClicked);
-    }, [buildClicked]);
-  };
-
-  console.log(titleHovered, "title-hovered", buildClicked, "build-clicked");
+  // console.log(
+  //   titleHovered,
+  //   "title-hovered",
+  //   buildClicked,
+  //   "build-clicked",
+  //   landingID(),
+  //   "landing-id"
+  // );
 
   return (
     <div>
       <div className="app">
-        <main
-          id={navOpen ? "landing-open" : null}
-          className={titleHovered ? "landing landing-title-hovered" : "landing"}
-        >
+        <main id={landingID()} className="landing">
+          <div className="hover-stopper"></div>
           <div className="topline">
             <ul className="topline-items">
               <li>LOCATION 53.4808° N, 2.2426° W</li>
               <li>EST 2023</li>
               <li>
-                <a className="logo-container">
+                <a href="/" className="logo-container">
                   <img
                     id="logo"
                     className="logo"
-                    src={Logo}
+                    src={titleHovered ? LogoLight : Logo}
                     alt="Buztek logo"
                   />
                 </a>
@@ -300,7 +384,9 @@ function App() {
                 className="header-row header-row-one"
                 id="titleWordOne"
                 data-text="BUILD"
-                onClick={handleTitleClick}
+                onClick={() => {
+                  setBuildClicked(!buildClicked);
+                }}
               >
                 <span className="smlTitle">we</span>
                 BUILD
@@ -325,7 +411,6 @@ function App() {
           <div className="footer">
             <div className="blurb">Your digital technology.</div>
           </div>
-
           <section className="carousel">
             <div
               id="carousel-track"
@@ -376,11 +461,138 @@ function App() {
             </div>
           </section>
         </main>
-      </div>
+        <div className="services" id={navOpen ? "services-open" : null}>
+          <div id="overlay-light"></div>
+          <div className="marquee marquee-sml">
+            <span>
+              A one Page website, that informs users about a product, service or
+              event. A one Page website, that informs users about a product,
+              service or event. A one Page website, that informs users about a
+              product, service or event. A one Page website, that informs users
+              about a product, service or event. A one Page website, that
+              informs users about a product, service or event. A one Page
+              website, that informs users about a product, service or event.
+            </span>
+          </div>
+          <div className="marquee marquee-lrg">
+            <span>
+              CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES
+              CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES
+              CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES
+              CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES CUSTOM WEBSITES
+              CUSTOM WEBSITES CUSTOM WEBSITES
+            </span>
+          </div>
+          <div id="overlay-dark"></div>
+          <div className="content">
+            <div className="build-row title-row">
+              <div className="col col-title">BUZTEK</div>
+              <div className="col col-title">landingPAGE</div>
+              <div className="col col-title">multiPAGE</div>
+            </div>
+            <div className="divider title-divider"></div>
+            <div className="build-row">
+              <div className="col">
+                One-page website (up to 10 screen heights)
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+              <div className="col"></div>
+            </div>
+            <div className="divider"></div>
+            <div className="build-row">
+              <div className="col">
+                UX/UI design in Figma, Developed with custom ReactJS code
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">Modern interactions and animations</div>
+              <div className="col circle">
+                <span></span>
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">Reliable one-language source code</div>
+              <div className="col circle">
+                <span></span>
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">Desktop, tablet and mobile versions</div>
 
+              <div className="col circle">
+                <span></span>
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">
+                Privacy Policy and Data Protection Protocols
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">CD/CI deployment</div>
+              <div className="col"></div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">Up to 6 unique pages</div>
+              <div className="col"></div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row">
+              <div className="col">Custom 404 page</div>
+              <div className="col"></div>
+              <div className="col circle">
+                <span></span>
+              </div>
+            </div>
+            <div className="divider"></div>{" "}
+            <div className="build-row pricing">
+              <div className="col col-price">pricing</div>
+              <div className="col col-price">£600</div>
+              <div className="col col-price">£1500</div>
+            </div>
+          </div>
+        </div>
+        {/*SERVICES-----------------------------------------*/}
+      </div>
+      {/*NAV----------------------------------------------*/}
       <nav id="nav">
         <div className="nav-links" id={navOpen ? "nav-links-open" : null}>
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="/">
             <h2 className="nav-link--label">HOME</h2>
             <img className="nav-link--image" src={HomeImage} />
           </a>
@@ -407,6 +619,7 @@ function App() {
           </a>
         </div>
       </nav>
+      {/*NAV-BUTTON---------------------------------------*/}
       <button
         id={navOpen ? "nav-open" : null}
         className="nav-toggle"
@@ -418,12 +631,13 @@ function App() {
           src={navOpen ? Cross : Menu}
         ></img>
       </button>
-
       <span className="nav-expander"></span>
-
+      {/*PRELOADER----------------------------------------*/}
       <main className="pre-loader">
         <div className="pre-loader-container">
-          {/* <img src={Wordmark} alt="Buztek Wordmark" /> */}
+          <div className="wordmark-container">
+            <div className="wordmark">BUZTEK</div>
+          </div>
           <div className="header concat">
             <h1 data-text="Our expertise lies in">Our expertise lies in</h1>
             <div className="header-wrapper"></div>

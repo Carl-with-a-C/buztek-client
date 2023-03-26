@@ -132,7 +132,6 @@
 
 .nav-toggle:active {
   transform: translateX(-50%) scale(0.95);
-  background-color: $yellow;
 }
 
 .nav-toggle:focus {
@@ -140,7 +139,7 @@
 }
 
 #nav-open {
-  background-color: $yellow;
+  background-color: $yellow !important;
 }
 
 #button-menu-icon {
