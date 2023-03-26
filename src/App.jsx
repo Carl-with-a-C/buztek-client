@@ -9,8 +9,6 @@ import NavButton from "./components/NavButton";
 import PreLoader from "./components/PreLoader";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
   const [navOpen, setNavOpen] = useState(false);
   const [mouseDown, setMouseDown] = useState(0);
   const [mouseDelta, setMouseDelta] = useState(0);
@@ -21,23 +19,9 @@ function App() {
 
   const [revealSite, setRevealSite] = useState(false);
   const [buildClicked, setBuildClicked] = useState(false);
+  const [secureClicked, setSecureClicked] = useState(false);
 
   const maxDelta = window.innerHeight / 2;
-
-  const toggleNav = () => {
-    setNavOpen(!navOpen);
-    setBuildClicked(false);
-  };
-
-  const landingID = () => {
-    if (navOpen) {
-      return "landing-open";
-    }
-    if (titleHovered) {
-      return "landing-title-hovered";
-    }
-    return null;
-  };
 
   //mousemovement tracker and animator
   useEffect(() => {
@@ -185,9 +169,14 @@ function App() {
             },
             "+=0.5"
           )
-          .to(".hover-stopper", 0, {
-            display: "none",
-          });
+          .to(
+            ".hover-stopper",
+            0,
+            {
+              display: "none",
+            },
+            "-=1.2"
+          );
       }
 
       //preloader auto animation
@@ -249,7 +238,7 @@ function App() {
   //   });
   // }, []);
 
-  /*page transition LANDING>SERVICES*/
+  /*page transition LANDING>SERVICES>build*/
   useEffect(() => {
     const tl = gsap.timeline();
 
@@ -261,7 +250,7 @@ function App() {
         })
           .to(
             ".nav-expander",
-            2,
+            1.8,
             {
               opacity: 0,
               display: "none",
@@ -276,7 +265,7 @@ function App() {
               x: "-100%",
               opacity: 1,
             },
-            "-=3"
+            "-=2.5"
           );
 
         tl.from(
@@ -346,14 +335,105 @@ function App() {
     });
   }, [buildClicked]);
 
-  console.log(
-    titleHovered,
-    "title-hovered",
-    buildClicked,
-    "build-clicked",
-    landingID(),
-    "landing-id"
-  );
+  /*page transition LANDING>SERVICES>secure*/
+
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    let tmx = gsap.context(() => {
+      if (secureClicked === true) {
+        tl.to(".nav-expander", 2, {
+          scale: 25,
+          ease: "power3.inOut",
+        })
+          .to(
+            ".nav-expander",
+            1.8,
+            {
+              opacity: 0,
+              display: "none",
+              ease: "power3.inOut",
+            },
+            "+=0.2"
+          )
+          .to(
+            ".landing, .services",
+            0.1,
+            {
+              x: "-100%",
+              opacity: 1,
+            },
+            "-=2.5"
+          );
+
+        tl.from(
+          ".divider",
+          1.5,
+          {
+            scaleX: 0,
+            ease: "power3.inOut",
+            stagger: {
+              amount: 1,
+            },
+          },
+          "-=1.5"
+        )
+          .from(
+            ".build-row > .col:first-child, .title-row, .col-price",
+            1,
+            {
+              opacity: 0,
+              y: 35,
+              ease: "power3.inOut",
+              stagger: {
+                amount: 1.5,
+              },
+            },
+            "-=1.5"
+          )
+          .to("#overlay-dark", 1.2, {
+            top: "-100%",
+            ease: "power3.inOut",
+          })
+          .from(
+            ".marquee",
+            1,
+            {
+              opacity: 0,
+              bottom: "-5%",
+              ease: "power3.inOut",
+            },
+            "-=2"
+          )
+          .from(
+            ".circle",
+            1.1,
+            {
+              scaleY: 0,
+              ease: "power3.inOut",
+              stagger: {
+                amount: 1,
+              },
+            },
+            "-=0.8"
+          )
+          .to(
+            ".pricing",
+            1.2,
+            {
+              opacity: 1,
+              ease: "power3.inOut",
+            },
+            "-=0.8"
+          );
+      }
+      return () => {
+        tmx.revert();
+      };
+    });
+  }, [secureClicked]);
+
+  console.log(secureClicked);
 
   return (
     <div>
@@ -362,10 +442,16 @@ function App() {
           titleHovered={titleHovered}
           setBuildClicked={setBuildClicked}
           buildClicked={buildClicked}
+          setSecureClicked={setSecureClicked}
+          secureClicked={secureClicked}
           mouseDelta={mouseDelta}
           navOpen={navOpen}
         />
-        <Services navOpen={navOpen} />
+        <Services
+          navOpen={navOpen}
+          buildClicked={buildClicked}
+          secureClicked={secureClicked}
+        />
       </div>
       <Nav navOpen={navOpen} />
       <NavButton navOpen={navOpen} setNavOpen={setNavOpen} />
